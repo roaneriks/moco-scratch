@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Node
+node_modules/
+dashboard/node_modules/
+
+# Vite build output
+dashboard/dist/
+dashboard/.vite/
+
+# Local env (never commit real keys)
+.env
+.env.local
+dashboard/.env
+dashboard/.env.local
+
+# Editor
+.vscode/
+.idea/
