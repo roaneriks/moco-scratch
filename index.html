@@ -14,22 +14,33 @@
 
   :root {
     --pink:       #E4007B;
-    --pink-soft:  #fce8f3;
+    --pink-soft:  rgba(228, 0, 123, 0.18);
     --pink-deep:  #b30061;
-    --ink:        #000000;
-    --ink-2:      #333333;
-    --ink-soft:   #888888;
-    --paper:      #ffffff;
-    --paper-2:    #f5f5f5;
-    --border:     #e0e0e0;
+    --ink:        #ffffff;
+    --ink-2:      #e0e0e0;
+    --ink-soft:   #aaaaaa;
+    --paper:      #0f0f0f;
+    --paper-2:    #1a1a1a;
+    --border:     rgba(255,255,255,0.22);
   }
 
   html, body {
     height: 100%;
-    background: #111;
+    background: #0f0f0f;
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
     overscroll-behavior: none;
+  }
+
+  /* Full-page scratch card texture — fixed, 70% opacity */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('/Scratcher_background.png') center/cover no-repeat;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: -1;
   }
 
   body {
@@ -43,8 +54,9 @@
   #root {
     width: 100%;
     max-width: 430px;
-    background: var(--paper);
+    background: transparent;
     position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -95,7 +107,7 @@
   /* Scrollbar styling */
   ::-webkit-scrollbar { width: 3px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--pink-soft); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
 
   /* Artwork image ready — fills the container, no flicker */
   .art-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -577,11 +589,11 @@ const Btn = ({ variant = 'default', sm, disabled, onClick, children, style = {} 
     ...style,
   };
   const V = {
-    default: { background: 'var(--paper)', color: 'var(--ink)', borderColor: 'var(--ink)' },
-    pink:    { background: 'var(--pink)',  color: 'white',       borderColor: 'var(--pink)' },
-    dark:    { background: 'var(--ink)',   color: 'white',       borderColor: 'var(--ink)' },
-    ghost:   { background: 'transparent', color: 'var(--ink-soft)', borderColor: 'var(--border)', borderStyle: 'solid' },
-    white:   { background: 'white',       color: 'var(--ink)',   borderColor: 'var(--border)' },
+    default: { background: 'rgba(255,255,255,0.08)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.6)' },
+    pink:    { background: 'var(--pink)',            color: 'white',   borderColor: 'var(--pink)' },
+    dark:    { background: '#ffffff',                color: '#0f0f0f', borderColor: '#ffffff' },
+    ghost:   { background: 'transparent', color: 'var(--ink-soft)', borderColor: 'rgba(255,255,255,0.28)', borderStyle: 'solid' },
+    white:   { background: '#ffffff',                color: '#0f0f0f', borderColor: 'rgba(255,255,255,0.4)' },
   };
   return (
     <button
@@ -594,7 +606,8 @@ const Btn = ({ variant = 'default', sm, disabled, onClick, children, style = {} 
 const Counter = ({ children }) => (
   <div style={{
     padding: '5px 12px', borderRadius: 2,
-    background: 'var(--ink)', color: 'white',
+    background: 'rgba(0,0,0,0.55)', color: 'white',
+    border: '1px solid rgba(255,255,255,0.35)',
     fontFamily: "'Inter', sans-serif", fontWeight: 600,
     fontSize: 12, letterSpacing: '0.06em', lineHeight: 1, flexShrink: 0,
   }}>{children}</div>
@@ -605,7 +618,7 @@ const Dots = ({ count, total }) => (
     {Array.from({ length: total }).map((_, i) => (
       <div key={i} style={{
         width: 6, height: 6, borderRadius: '50%',
-        background: i < count ? 'var(--ink)' : 'var(--border)',
+        background: i < count ? '#ffffff' : 'rgba(255,255,255,0.3)',
         transition: 'background 0.2s',
       }} />
     ))}
@@ -695,7 +708,7 @@ const StatusBar = ({ dark }) => {
 // ─── SCREEN 0 · WELCOME ────────────────────────────────────────────────────
 
 const WelcomeScreen = ({ onContinue }) => (
-  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--paper)', overflow: 'hidden' }}>
+  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'transparent', overflow: 'hidden' }}>
     {/* Top nav bar */}
     <div style={{
       flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -749,7 +762,7 @@ const WelcomeScreen = ({ onContinue }) => (
             position: 'absolute', top: '22%', left: '12%', width: '76%', height: '50%',
             borderRadius: 4, overflow: 'hidden',
           }}>
-            <img src="./images/jeff-koons-balloon-venus.jpg" alt="Balloon Venus"
+            <img src="/images/jeff-koons-balloon-venus.jpg" alt="Balloon Venus"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
           {/* Edition bottom */}
@@ -811,9 +824,9 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
   };
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--paper)', overflow: 'hidden' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'transparent', overflow: 'hidden' }}>
       {/* Top nav */}
-      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px 12px', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px 12px', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
         <div style={{ fontFamily: "'Times New Roman', serif", fontWeight: 700, fontSize: 20, lineHeight: 1, color: 'var(--ink)' }}>Moco</div>
         <Counter>{count} / 5</Counter>
       </div>
@@ -841,7 +854,7 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
                 onClick={() => toggle(i)}
                 style={{
                   aspectRatio: 1, padding: 0,
-                  border: on ? '2px solid var(--pink)' : '1px solid var(--border)',
+                  border: on ? '2px solid var(--pink)' : '3px solid rgba(255,255,255,0.82)',
                   borderRadius: 3, overflow: 'hidden',
                   position: 'relative', cursor: 'pointer',
                   background: aw.bg,
@@ -1130,11 +1143,11 @@ const VisMoodModule = ({ moodPos, mood }) => (
         background: 'conic-gradient(from 0deg, #ff5252, #ffb74d, #ffeb3b, #aed581, #4dd0e1, #5c6bc0, #ab47bc, #ff5252)',
         flexShrink: 0,
       }}>
-        <div style={{ position: 'absolute', inset: '30%', borderRadius: '50%', background: 'white' }}/>
+        <div style={{ position: 'absolute', inset: '30%', borderRadius: '50%', background: '#0f0f0f' }}/>
         <div style={{
           position: 'absolute', left: `${moodPos[0]}%`, top: `${moodPos[1]}%`,
           width: 11, height: 11, transform: 'translate(-50%,-50%)',
-          background: 'white', border: '2px solid var(--ink)', borderRadius: '50%',
+          background: 'white', border: '2px solid #0f0f0f', borderRadius: '50%',
         }}/>
       </div>
       <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--ink)', lineHeight: 1.15 }}>
@@ -1204,7 +1217,7 @@ const VisWealthModule = ({ value }) => (
         position: 'absolute', left: `${value * 100}%`, top: '50%',
         transform: 'translate(-50%, -50%)',
         width: 14, height: 14, background: 'white',
-        border: '2px solid var(--ink)', borderRadius: '50%',
+        border: '2px solid rgba(0,0,0,0.45)', borderRadius: '50%',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: 7,
       }}>↕</div>
@@ -1621,11 +1634,11 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
     .slice(0, 3);
 
   return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 20, background: 'white', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ position: 'absolute', inset: 0, zIndex: 20, background: '#0f0f0f', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
       {/* Header */}
       <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderBottom: '1px solid var(--border)' }}>
-        <button onClick={onClose} style={{ width: 28, height: 28, border: '1px solid var(--border)', borderRadius: 2, background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, cursor: 'pointer', color: 'var(--ink)' }}>‹</button>
+        <button onClick={onClose} style={{ width: 28, height: 28, border: '1px solid rgba(255,255,255,0.3)', borderRadius: 2, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, cursor: 'pointer', color: '#ffffff' }}>‹</button>
         <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 9, letterSpacing: '0.12em', color: 'var(--ink-soft)', textTransform: 'uppercase' }}>{idx + 1} / {total}</div>
         <Dots count={idx + 1} total={total} />
       </div>
@@ -1672,7 +1685,7 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
         {/* 4. Two info tiles */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid var(--border)' }}>
           {/* Materials tile */}
-          <div style={{ padding: '12px 14px', borderRight: '1px solid var(--border)', background: 'white', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ padding: '12px 14px', borderRight: '1px solid var(--border)', background: 'transparent', display: 'flex', flexDirection: 'column' }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 8 }}>Materials</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px 6px' }}>
               {v.materials.map((m, i) => (
@@ -1687,9 +1700,9 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
             </div>
           </div>
           {/* Location tile */}
-          <div style={{ padding: '12px 14px', background: 'white', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ padding: '12px 14px', background: 'transparent', display: 'flex', flexDirection: 'column' }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 4 }}>Where it was made</div>
-            <div style={{ flex: 1, overflow: 'hidden', minHeight: 88, background: 'white' }}>
+            <div style={{ flex: 1, overflow: 'hidden', minHeight: 88, background: 'transparent' }}>
               <MiniMap mapKey={v.mapKey} xy={v.mapXY} />
             </div>
             <div style={{ marginTop: 'auto', paddingTop: 8 }}>
@@ -1736,10 +1749,10 @@ const InsightExtras = ({ artworks, onClose }) => {
     }}>
       {/* Big card */}
       <div style={{
-        background: 'white', borderRadius: 8,
+        background: '#141414', borderRadius: 8,
         margin: '8px 8px 0', flex: 1,
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
-        boxShadow: '0 12px 40px rgba(0,0,0,0.22)', position: 'relative', zIndex: 2,
+        boxShadow: '0 12px 40px rgba(0,0,0,0.6)', position: 'relative', zIndex: 2,
       }}>
         {/* Header */}
         <div style={{
@@ -1748,9 +1761,9 @@ const InsightExtras = ({ artworks, onClose }) => {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <button onClick={onClose} style={{
-            width: 28, height: 28, border: '1px solid var(--border)', borderRadius: 2,
-            background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, cursor: 'pointer', color: 'var(--ink)',
+            width: 28, height: 28, border: '1px solid rgba(255,255,255,0.3)', borderRadius: 2,
+            background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 16, cursor: 'pointer', color: '#ffffff',
           }}>‹</button>
           <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 9, letterSpacing:'0.12em', color:'var(--ink-soft)', textTransform:'uppercase' }}>
             All insights
@@ -1771,7 +1784,7 @@ const InsightExtras = ({ artworks, onClose }) => {
               display: 'flex', gap: 10, alignItems: 'center',
             }}>
               <div style={{
-                width: 22, height: 22, background: 'var(--ink)', color: 'white',
+                width: 22, height: 22, background: 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.35)',
                 borderRadius: 2, flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: 11,
@@ -1797,7 +1810,7 @@ const InsightExtras = ({ artworks, onClose }) => {
               <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--pink)', marginTop: 12, textAlign: 'center' }}>✓ Sent! Check your inbox.</div>
             ) : (
               <>
-                <div style={{ border: '1px solid var(--border)', borderRadius: 3, marginTop: 10, padding: '8px 12px', background: 'white' }}>
+                <div style={{ border: '1px solid rgba(255,255,255,0.25)', borderRadius: 3, marginTop: 10, padding: '8px 12px', background: 'rgba(255,255,255,0.08)' }}>
                   <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email</div>
                   <input
                     value={email}
@@ -1812,12 +1825,12 @@ const InsightExtras = ({ artworks, onClose }) => {
                 </div>
                 {/* Terms checkbox */}
                 <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 10, cursor: 'pointer' }}>
-                  <div onClick={() => setAgreed(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: agreed ? 'var(--ink)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{agreed ? '✓' : ''}</div>
+                  <div onClick={() => setAgreed(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: agreed ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{agreed ? '✓' : ''}</div>
                   <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to the terms and conditions</span>
                 </label>
                 {/* Marketing checkbox */}
                 <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 8, cursor: 'pointer' }}>
-                  <div onClick={() => setMarketing(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: marketing ? 'var(--ink)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{marketing ? '✓' : ''}</div>
+                  <div onClick={() => setMarketing(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: marketing ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{marketing ? '✓' : ''}</div>
                   <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to receive news and communications from Moco Museum Barcelona</span>
                 </label>
                 <Btn variant="pink" sm onClick={() => { if (email && agreed) setSent(true); }} disabled={!email || !agreed} style={{ marginTop: 12, width: '100%' }}>
@@ -1850,7 +1863,7 @@ const InsightGridScreen = ({ artworks, allArtworks, onContinue, onBack }) => {
   };
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--paper)', overflow: 'hidden' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'transparent', overflow: 'hidden' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '0 16px 0', position: 'relative', overflow: 'hidden' }}>
 
         {/* Header */}
@@ -1891,8 +1904,8 @@ const InsightGridScreen = ({ artworks, allArtworks, onContinue, onBack }) => {
                 {/* Flush bottom label */}
                 <div style={{
                   position: 'absolute', bottom: 0, left: 0, right: 0,
-                  background: 'rgba(255,255,255,0.96)',
-                  borderTop: '1px solid var(--border)',
+                  background: 'rgba(0,0,0,0.72)',
+                  borderTop: '1px solid rgba(255,255,255,0.15)',
                   padding: '5px 8px 7px', textAlign: 'left', zIndex: 2,
                 }}>
                   <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 7, color: 'var(--ink-soft)', lineHeight: 1.2, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{art.artist.split(' · ')[0]}</div>
@@ -1905,8 +1918,8 @@ const InsightGridScreen = ({ artworks, allArtworks, onContinue, onBack }) => {
             <button
               onClick={() => setShowExtras(true)}
               style={{
-                aspectRatio: 1, background: 'white',
-                border: '1.5px solid var(--ink)', borderRadius: 4,
+                aspectRatio: 1, background: 'rgba(255,255,255,0.06)',
+                border: '1.5px solid rgba(255,255,255,0.7)', borderRadius: 4,
                 display: 'flex', flexDirection: 'column', alignItems: 'center',
                 justifyContent: 'center', cursor: 'pointer', gap: 4, position: 'relative',
               }}
@@ -2242,7 +2255,7 @@ const ShareScreen = ({ artworks, onBack }) => (
           width:22, height:22, borderRadius:'50%', border:'1.5px solid white', overflow:'hidden',
           background:'#333', flexShrink: 0,
         }}>
-          <img src="./images/pim-de-haan.jpg" alt="pim"
+          <img src="/images/pim-de-haan.jpg" alt="pim"
             style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
         </div>
         <div style={{ ...S.mono, fontSize:10, fontWeight:600, color:'white', letterSpacing:'0.02em' }}>pim_de_haan</div>
@@ -2331,7 +2344,7 @@ function App() {
   }, []);
 
   if (loading) return (
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--paper)' }}>
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }}>
       <LoadingSpinner />
     </div>
   );
