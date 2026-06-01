@@ -399,6 +399,7 @@ const INSIGHTS_V = [
     materials: ["polished steel", "mirror finish", "chrome"], technique: "fabricated steel",
     process: "2:10 · studio process",
     processImg: '/images/art creation process/Jeff koons artwork creation.webp',
+    processPhotos: ['/images/art creation process/koons-technique.webp'],
     artistLife: { born: 1955, died: null, marker: 2014 }, artistAge: 59,
     wealthScale: 0.98,
     movement: ["Neo-pop", "Kitsch", "Conceptual"],
@@ -1580,19 +1581,27 @@ const InsightMovementPyramid = ({ movement }) => {
   );
 };
 
-const InsightProcessPhotos = ({ art, related, process, processImg }) => {
-  const photos = related.slice(0, 2); // 2 reference photos
+const InsightProcessPhotos = ({ art, related, process, processImg, processPhotos }) => {
+  const relatedPhotos = related.slice(0, 2);
+  const topPhotos = processPhotos && processPhotos.length > 0 ? processPhotos : null;
   const wideImg = processImg || art.img;
   return (
     <div style={{ padding: '14px 14px', borderBottom: '1px solid var(--border)' }}>
       <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>Video / Photo of art creation</div>
       {/* Two photos on top */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
-        {(photos.length > 0 ? photos : [art, art]).map((a, i) => (
-          <div key={i} style={{ flex: 1, aspectRatio: '4/3', background: a.bg, borderRadius: 3, overflow: 'hidden', position: 'relative', border: '1px solid var(--border)' }}>
-            {a.img && <img src={a.img} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>}
-          </div>
-        ))}
+        {topPhotos
+          ? topPhotos.map((src, i) => (
+              <div key={i} style={{ flex: 1, aspectRatio: '4/3', background: 'var(--paper-2)', borderRadius: 3, overflow: 'hidden', position: 'relative', border: '1px solid var(--border)' }}>
+                <img src={src} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>
+              </div>
+            ))
+          : (relatedPhotos.length > 0 ? relatedPhotos : [art, art]).map((a, i) => (
+              <div key={i} style={{ flex: 1, aspectRatio: '4/3', background: a.bg, borderRadius: 3, overflow: 'hidden', position: 'relative', border: '1px solid var(--border)' }}>
+                {a.img && <img src={a.img} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>}
+              </div>
+            ))
+        }
       </div>
       {/* Wide video below */}
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: art.bg, borderRadius: 3, overflow: 'hidden', border: '1px solid var(--border)' }}>
@@ -1733,7 +1742,7 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
         <InsightMovementPyramid movement={v.movement} />
 
         {/* 7. Process photos */}
-        <InsightProcessPhotos art={art} related={related} process={v.process} processImg={v.processImg} />
+        <InsightProcessPhotos art={art} related={related} process={v.process} processImg={v.processImg} processPhotos={v.processPhotos} />
 
         {/* 8. Related art */}
         <InsightRelatedArt related={related} />
