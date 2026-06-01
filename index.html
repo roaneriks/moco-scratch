@@ -707,100 +707,122 @@ const StatusBar = ({ dark }) => {
 
 // ─── SCREEN 0 · WELCOME ────────────────────────────────────────────────────
 
-const WelcomeScreen = ({ onContinue }) => (
-  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'transparent', overflow: 'hidden' }}>
-    {/* Top nav bar */}
+const WelcomeScreen = ({ onContinue }) => {
+  const cardArtworks = ARTWORKS.slice(0, 12);
+  return (
     <div style={{
-      flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '18px 24px 14px', borderBottom: '1px solid var(--border)',
+      flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+      background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/Scratcher_background.png") center/cover fixed #0f0f0f',
     }}>
-      <div>
-        <div style={{ fontFamily: "'Times New Roman', serif", fontWeight: 700, fontSize: 26, lineHeight: 1, letterSpacing: '0.01em', color: 'var(--ink)', textAlign: 'center' }}>Moco</div>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 7, letterSpacing: '0.55em', paddingLeft: '0.55em', marginTop: 1, color: 'var(--ink-2)', textAlign: 'center', textTransform: 'uppercase' }}>Museum Barcelona</div>
-      </div>
-    </div>
-
-    <div style={{
-      flex: 1, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', padding: '28px 24px 28px',
-      textAlign: 'center', position: 'relative',
-    }}>
-
-      {/* Scratch-card illustration */}
+      {/* Top nav bar */}
       <div style={{
-        position: 'relative', margin: '0 auto 32px',
-        width: 160, height: 224,
-        borderRadius: 8, overflow: 'visible',
-        transform: 'rotate(-2deg)',
-        boxShadow: '0 16px 48px rgba(0,0,0,0.18)',
+        flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '18px 24px 14px', borderBottom: '1px solid var(--border)',
       }}>
-        {/* Card body */}
+        <img src="/logo-moco-white.png" alt="Moco" style={{ height: 36, display: 'block' }} />
+      </div>
+
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'column',
+        alignItems: 'center', padding: '24px 28px',
+        textAlign: 'center', position: 'relative',
+      }}>
+
+        {/* Physical scratch card — dark with 4×3 artwork thumbnail grid */}
         <div style={{
-          position: 'absolute', inset: 0,
-          borderRadius: 8, overflow: 'hidden',
-          background: '#111',
+          position: 'relative', margin: '0 auto 24px',
+          width: 148, height: 208, flexShrink: 0,
+          transform: 'rotate(-2deg)',
         }}>
-          {/* Pink gradient coating */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(150deg, var(--pink) 0%, var(--pink-deep) 100%)',
-          }} />
-          {/* Sheen */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(150deg, rgba(255,255,255,0.18) 0%, transparent 40%)',
-          }} />
-          {/* Title */}
-          <div style={{
-            position: 'absolute', top: 12, left: 0, right: 0, textAlign: 'center',
-            color: 'rgba(255,255,255,0.9)',
-            fontFamily: "'Inter', sans-serif", fontWeight: 500,
-            fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase',
-          }}>Moco Scratch</div>
-          {/* Scratched-away area — Balloon Venus */}
-          <div style={{
-            position: 'absolute', top: '22%', left: '12%', width: '76%', height: '50%',
-            borderRadius: 4, overflow: 'hidden',
+            borderRadius: 8, overflow: 'hidden',
+            background: '#0d0d0d',
+            border: '1.5px solid rgba(255,255,255,0.2)',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.65), 0 4px 12px rgba(0,0,0,0.5)',
           }}>
-            <img src="/images/jeff-koons-balloon-venus.jpg" alt="Balloon Venus"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div style={{
+              position: 'absolute', top: 9, right: 9, bottom: 7, left: 9,
+              display: 'flex', flexDirection: 'column',
+            }}>
+              <div style={{
+                textAlign: 'center', marginBottom: 7, flexShrink: 0,
+                fontFamily: "'Inter', sans-serif", fontWeight: 600,
+                fontSize: 7.5, letterSpacing: '0.28em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.72)',
+              }}>Moco Scratch</div>
+
+              <div style={{
+                flex: 1, minHeight: 0,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateRows: 'repeat(3, 1fr)',
+                gap: 2.5,
+              }}>
+                {cardArtworks.map((aw, i) => (
+                  <div key={i} style={{
+                    border: '1.5px solid rgba(255,255,255,0.88)',
+                    borderRadius: 1.5, overflow: 'hidden',
+                    background: aw.bg,
+                  }}>
+                    {aw.img && <img src={aw.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                  </div>
+                ))}
+              </div>
+
+              <div style={{
+                textAlign: 'center', marginTop: 6, flexShrink: 0,
+                fontFamily: "'Inter', sans-serif", fontWeight: 400,
+                fontSize: 6.5, letterSpacing: '0.22em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.4)',
+              }}>Edition · #145</div>
+            </div>
           </div>
-          {/* Edition bottom */}
+        </div>
+
+        {/* Stacked headline: Scratch. / Discover. / Learn. */}
+        <div style={{ marginBottom: 14, width: '100%' }}>
+          <div style={{ display: 'inline-block', marginBottom: 4 }}>
+            <div style={{
+              fontFamily: "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif",
+              fontWeight: 700, fontSize: 40, lineHeight: 1.05, color: '#ffffff',
+              borderBottom: '4px solid #E4007B', paddingBottom: 3,
+            }}>Scratch.</div>
+          </div>
           <div style={{
-            position: 'absolute', bottom: 10, left: 0, right: 0, textAlign: 'center',
-            color: 'rgba(255,255,255,0.55)',
-            fontFamily: "'Inter', sans-serif", fontWeight: 400,
-            fontSize: 7, letterSpacing: '0.28em', textTransform: 'uppercase',
-          }}>Edition · #145</div>
+            fontFamily: "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif",
+            fontWeight: 700, fontSize: 40, lineHeight: 1.05, color: '#ffffff',
+          }}>Discover.</div>
+          <div style={{
+            fontFamily: "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif",
+            fontWeight: 700, fontSize: 40, lineHeight: 1.05, color: '#ffffff',
+          }}>Learn.</div>
+        </div>
+
+        {/* Subtitle */}
+        <div style={{
+          fontFamily: "'Inter', sans-serif", fontWeight: 400,
+          fontSize: 13, lineHeight: 1.65, color: 'var(--ink-2)',
+        }}>
+          Pick artworks that speak to you<br/>and discover your Moco reveal.
+        </div>
+
+        <div style={{ flex: 1, minHeight: 12 }} />
+
+        <Btn variant="pink" onClick={onContinue} style={{ width: '100%', padding: '16px 22px', fontSize: 12, letterSpacing: '0.12em' }}>
+          Start
+        </Btn>
+        <div style={{
+          fontFamily: "'Inter', sans-serif", fontWeight: 400,
+          fontSize: 10, letterSpacing: '0.1em', color: 'var(--ink-soft)', marginTop: 12,
+          textTransform: 'uppercase',
+        }}>
+          Edition #145 · Moco BCN · 24 May 2026
         </div>
       </div>
-
-      {/* Heading */}
-      <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 32, lineHeight: 1.05, color: 'var(--ink)', textAlign: 'center' }}>
-        Your Moco<br/>scratch card
-      </div>
-      <div style={{
-        fontFamily: "'Inter', sans-serif", fontWeight: 400,
-        fontSize: 13, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 14,
-      }}>
-        Pick artworks that speak to you<br/>and discover your Moco reveal.
-      </div>
-
-      <div style={{ flex: 1 }} />
-
-      <Btn variant="pink" onClick={onContinue} style={{ width: '100%', padding: '16px 22px', fontSize: 12, letterSpacing: '0.12em' }}>
-        Start
-      </Btn>
-      <div style={{
-        fontFamily: "'Inter', sans-serif", fontWeight: 400,
-        fontSize: 10, letterSpacing: '0.1em', color: 'var(--ink-soft)', marginTop: 12,
-        textTransform: 'uppercase',
-      }}>
-        Edition #145 · Moco BCN · 24 May 2026
-      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─── SCREEN 1 · PICKER ─────────────────────────────────────────────────────
 
@@ -829,7 +851,7 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
     }}>
       {/* Top nav */}
       <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px 12px', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-        <div style={{ fontFamily: "'Times New Roman', serif", fontWeight: 700, fontSize: 20, lineHeight: 1, color: 'var(--ink)' }}>Moco</div>
+        <img src="/logo-moco-white.png" alt="Moco" style={{ height: 26, display: 'block' }} />
         <Counter>{count} / 5</Counter>
       </div>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 16px 18px', overflow: 'hidden' }}>
@@ -875,20 +897,6 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
                   }} />
                 )}
 
-                {/* Prompt label at bottom (unselected only) */}
-                {!on && (
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
-                    padding: '8px 3px 3px',
-                  }}>
-                    <div style={{
-                      fontFamily: "'Inter', sans-serif", fontWeight: 400,
-                      fontSize: 6, color: 'rgba(255,255,255,0.88)',
-                      letterSpacing: '0.03em', lineHeight: 1.25, textAlign: 'center',
-                    }}>{(aw.prompt || PROMPTS[i]).toLowerCase()}</div>
-                  </div>
-                )}
 
                 {/* Checkmark (selected) */}
                 {on && (
@@ -1737,7 +1745,9 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
   );
 };
 
-const InsightExtras = ({ artworks, onClose }) => {
+const InsightExtras = ({ artworks, allArtworks = [], onClose }) => {
+  const pickedTitles = new Set(artworks.map(a => a.title));
+  const remaining = allArtworks.filter(a => !pickedTitles.has(a.title));
   const [email, setEmail] = useState('');
   const [agreed, setAgreed] = useState(false);
   const [marketing, setMarketing] = useState(false);
@@ -1796,7 +1806,32 @@ const InsightExtras = ({ artworks, onClose }) => {
                 <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{art.artist.split(' · ')[0]}</div>
                 <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 11, marginTop: 1, color: 'var(--ink)' }}>{art.title}</div>
               </div>
-              <div style={{ color: 'var(--pink)', fontSize: 16, flexShrink: 0 }}>↗</div>
+              <div style={{
+                width: 16, height: 16, border: '1.5px solid var(--pink)', borderRadius: 2,
+                flexShrink: 0, background: 'var(--pink)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'white', fontSize: 9, fontWeight: 700,
+              }}>✓</div>
+            </div>
+          ))}
+
+          {/* Remaining artworks from the full collection */}
+          {remaining.map((art, i) => (
+            <div key={`r${i}`} style={{
+              padding: '10px 16px', borderTop: '1px solid var(--border)',
+              display: 'flex', gap: 10, alignItems: 'center',
+            }}>
+              <ArtBox art={art} style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 3 }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{art.artist.split(' · ')[0]}</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 11, marginTop: 1, color: 'var(--ink)' }}>{art.title}</div>
+              </div>
+              <div style={{
+                width: 16, height: 16, border: '1.5px solid var(--pink)', borderRadius: 2,
+                flexShrink: 0, background: 'var(--pink)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'white', fontSize: 9, fontWeight: 700,
+              }}>✓</div>
             </div>
           ))}
 
@@ -1916,26 +1951,25 @@ const InsightGridScreen = ({ artworks, allArtworks, onContinue, onBack }) => {
               </button>
             ))}
 
-            {/* "More" tile */}
-            <button
-              onClick={() => setShowExtras(true)}
-              style={{
-                aspectRatio: 1, background: 'rgba(255,255,255,0.06)',
-                border: '1.5px solid rgba(255,255,255,0.7)', borderRadius: 4,
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                justifyContent: 'center', cursor: 'pointer', gap: 4, position: 'relative',
-              }}
-            >
-              <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22, lineHeight: 1, color: 'var(--ink)' }}>More</div>
-              <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Deeper dives</div>
-            </button>
           </div>
         </div>
 
         {/* CTA — fixed at bottom, never moves */}
-        <div style={{ flexShrink: 0, padding: '12px 0 18px', display: 'flex', gap: 8 }}>
-          <Btn variant="default" sm onClick={onBack} style={{ width: 55, flexShrink: 0 }}>‹</Btn>
-          <Btn variant="pink" onClick={onContinue} style={{ flex: 1 }}>Continue</Btn>
+        <div style={{ flexShrink: 0, padding: '12px 0 18px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <button
+            onClick={() => setShowExtras(true)}
+            style={{
+              width: '100%', padding: '13px 22px',
+              background: '#ffffff', color: '#E4007B',
+              border: '1.5px solid #E4007B', borderRadius: 3,
+              fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: 13,
+              letterSpacing: '0.06em', textTransform: 'uppercase', cursor: 'pointer',
+            }}
+          >See all artwork insights</button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <Btn variant="default" sm onClick={onBack} style={{ width: 55, flexShrink: 0 }}>‹</Btn>
+            <Btn variant="pink" onClick={onContinue} style={{ flex: 1 }}>Continue</Btn>
+          </div>
         </div>
 
         {/* Overlays */}
@@ -1946,7 +1980,7 @@ const InsightGridScreen = ({ artworks, allArtworks, onContinue, onBack }) => {
             allArtworks={allArtworks}
           />
         )}
-        {showExtras && <InsightExtras artworks={artworks} onClose={() => setShowExtras(false)} />}
+        {showExtras && <InsightExtras artworks={artworks} allArtworks={allArtworks} onClose={() => setShowExtras(false)} />}
       </div>
     </div>
   );
@@ -2167,7 +2201,7 @@ const ScratchScreen = ({ artworks, onComplete, onBack }) => {
 
 // ─── SCREEN 5 · REVEAL ─────────────────────────────────────────────────────
 
-const RevealArtworks = ({ artworks }) => (
+const RevealArtworks = ({ artworks, noGold = false }) => (
   <div style={{
     position: 'absolute', top: '50%', left: 0, right: 0,
     transform: 'translateY(-50%)', height: '70%', padding: '0 14px',
@@ -2192,12 +2226,12 @@ const RevealArtworks = ({ artworks }) => (
             <img className="art-img" src={artworks[i].img} alt={artworks[i].title} />
           )}
           {/* Light top-shine for depth */}
-          <div style={{
+          {!noGold && <div style={{
             position: 'absolute', inset: 0,
             background: 'linear-gradient(165deg, rgba(255,255,255,0.18) 0%, transparent 45%)',
-          }} />
+          }} />}
         </div>
-        <div className="gold-leaf" />
+        {!noGold && <div className="gold-leaf" />}
       </div>
     ))}
   </div>
@@ -2209,12 +2243,23 @@ const RevealScreen = ({ artworks, onShare }) => (
     <div style={{ position:'absolute', top:'5%', left:'-25%', width:'70%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.22) 0%, transparent 65%)', pointerEvents:'none' }} />
     <div style={{ position:'absolute', bottom:'5%', right:'-30%', width:'75%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.18) 0%, transparent 65%)', pointerEvents:'none' }} />
 
-    <RevealArtworks artworks={artworks} />
+    {/* "Your Moco favourites" heading */}
+    <div style={{
+      position: 'absolute', top: 24, left: 0, right: 0,
+      textAlign: 'center', zIndex: 4, pointerEvents: 'none',
+    }}>
+      <div style={{
+        fontFamily: "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif",
+        fontWeight: 700, fontSize: 22, color: '#ffffff', lineHeight: 1.1,
+        textShadow: '0 2px 10px rgba(0,0,0,0.7)',
+      }}>Your Moco favourites</div>
+    </div>
+
+    <RevealArtworks artworks={artworks} noGold />
 
     {/* Moco logo — bottom right */}
-    <div style={{ position: 'absolute', bottom: 82, right: 18, textAlign: 'right', zIndex: 4 }}>
-      <div style={{ fontFamily: "'Times New Roman', serif", fontSize: 24, fontWeight: 600, lineHeight: 1, color: 'white' }}>Moco</div>
-      <div style={{ ...S.mono, fontSize: 7, letterSpacing: '0.5em', paddingLeft: '0.5em', marginTop: 1, opacity: 0.82, color: 'white' }}>MUSEUM</div>
+    <div style={{ position: 'absolute', bottom: 82, right: 18, zIndex: 4 }}>
+      <img src="/logo-moco-white.png" alt="Moco" style={{ height: 30, display: 'block', opacity: 0.9 }} />
     </div>
 
     {/* Action buttons */}
@@ -2268,12 +2313,11 @@ const ShareScreen = ({ artworks, onBack }) => (
       </div>
     </div>
 
-    <RevealArtworks artworks={artworks} />
+    <RevealArtworks artworks={artworks} noGold />
 
     {/* Moco logo */}
     <div style={{ position:'absolute', bottom:82, right:18, textAlign:'right', zIndex:4 }}>
-      <div style={{ fontFamily:"'Times New Roman', serif", fontSize:24, fontWeight:600, lineHeight:1, color:'white' }}>Moco</div>
-      <div style={{ ...S.mono, fontSize:7, letterSpacing:'0.5em', paddingLeft:'0.5em', marginTop:1, opacity:0.82, color:'white' }}>MUSEUM</div>
+      <img src="/logo-moco-white.png" alt="Moco" style={{ height: 30, display: 'block', opacity: 0.9 }} />
     </div>
 
   </div>
