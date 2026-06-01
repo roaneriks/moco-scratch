@@ -398,6 +398,7 @@ const INSIGHTS_V = [
     mood: { label: "playful opulence", emoji: "◉‿◉" }, moodPos: [55, 20],
     materials: ["polished steel", "mirror finish", "chrome"], technique: "fabricated steel",
     process: "2:10 · studio process",
+    processImg: '/images/art creation process/Jeff koons artwork creation.webp',
     artistLife: { born: 1955, died: null, marker: 2014 }, artistAge: 59,
     wealthScale: 0.98,
     movement: ["Neo-pop", "Kitsch", "Conceptual"],
@@ -1579,8 +1580,9 @@ const InsightMovementPyramid = ({ movement }) => {
   );
 };
 
-const InsightProcessPhotos = ({ art, related, process }) => {
+const InsightProcessPhotos = ({ art, related, process, processImg }) => {
   const photos = related.slice(0, 2); // 2 reference photos
+  const wideImg = processImg || art.img;
   return (
     <div style={{ padding: '14px 14px', borderBottom: '1px solid var(--border)' }}>
       <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>Video / Photo of art creation</div>
@@ -1594,7 +1596,7 @@ const InsightProcessPhotos = ({ art, related, process }) => {
       </div>
       {/* Wide video below */}
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: art.bg, borderRadius: 3, overflow: 'hidden', border: '1px solid var(--border)' }}>
-        {art.img && <img src={art.img} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>}
+        {wideImg && <img src={wideImg} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--pink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 16, paddingLeft: 3 }}>▶</div>
         </div>
@@ -1731,7 +1733,7 @@ const ZoomCard = ({ art, idx, total, onClose, onPrev, onNext, onContinue, allArt
         <InsightMovementPyramid movement={v.movement} />
 
         {/* 7. Process photos */}
-        <InsightProcessPhotos art={art} related={related} process={v.process} />
+        <InsightProcessPhotos art={art} related={related} process={v.process} processImg={v.processImg} />
 
         {/* 8. Related art */}
         <InsightRelatedArt related={related} />
