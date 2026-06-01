@@ -1786,8 +1786,8 @@ const InsightExtras = ({ artworks, allArtworks = [], onClose }) => {
           <div style={{ width: 28 }} />
         </div>
 
-        {/* Scrollable */}
-        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        {/* Scrollable artwork list */}
+        <div style={{ flex: 1, overflowY: 'auto' }}>
           <div style={{ padding: '14px 16px 8px' }}>
             <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--ink)' }}>Your favourite artworks</div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 11, color: 'var(--ink-2)', marginTop: 3 }}>A recap of what you uncovered today.</div>
@@ -1838,47 +1838,51 @@ const InsightExtras = ({ artworks, allArtworks = [], onClose }) => {
             </div>
           ))}
 
-          {/* Email block */}
-          <div style={{
-            flexShrink: 0, marginTop: 'auto',
-            background: 'var(--paper-2)', borderTop: '1px solid var(--border)',
-            padding: '14px 16px 18px',
-          }}>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 16, color: 'var(--ink)' }}>Save your insight</div>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 11, color: 'var(--ink-2)', marginTop: 3 }}>Re-read your insights on the train home.</div>
-            {sent ? (
-              <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--pink)', marginTop: 12, textAlign: 'center' }}>✓ Sent! Check your inbox.</div>
-            ) : (
-              <>
-                <div style={{ border: '1px solid rgba(255,255,255,0.25)', borderRadius: 3, marginTop: 10, padding: '8px 12px', background: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email</div>
-                  <input
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="you@email.com"
-                    type="email"
-                    style={{
-                      width: '100%', border: 'none', background: 'transparent', outline: 'none',
-                      fontFamily: "'Inter', sans-serif", fontSize: 12, color: 'var(--ink)', marginTop: 3, padding: 0,
-                    }}
-                  />
-                </div>
-                {/* Terms checkbox */}
-                <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 10, cursor: 'pointer' }}>
-                  <div onClick={() => setAgreed(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: agreed ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{agreed ? '✓' : ''}</div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to the terms and conditions</span>
-                </label>
-                {/* Marketing checkbox */}
-                <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 8, cursor: 'pointer' }}>
-                  <div onClick={() => setMarketing(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: marketing ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{marketing ? '✓' : ''}</div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to receive news and communications from Moco Museum Barcelona</span>
-                </label>
-                <Btn variant="pink" sm onClick={() => { if (email && agreed) setSent(true); }} disabled={!email || !agreed} style={{ marginTop: 12, width: '100%' }}>
-                  Save your insight
-                </Btn>
-              </>
-            )}
-          </div>
+          {/* Bottom breathing room so last item scrolls clear */}
+          <div style={{ height: 8 }} />
+        </div>
+
+        {/* Save your insight — sticky at bottom of card, never scrolls away */}
+        <div style={{
+          flexShrink: 0,
+          background: 'var(--paper-2)', borderTop: '1px solid var(--border)',
+          padding: '14px 16px 0',
+          paddingBottom: 'calc(18px + env(safe-area-inset-bottom, 16px))',
+        }}>
+          <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 16, color: 'var(--ink)' }}>Save your insight</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 11, color: 'var(--ink-2)', marginTop: 3 }}>Re-read your insights on the train home.</div>
+          {sent ? (
+            <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--pink)', marginTop: 12, textAlign: 'center' }}>✓ Sent! Check your inbox.</div>
+          ) : (
+            <>
+              <div style={{ border: '1px solid rgba(255,255,255,0.25)', borderRadius: 3, marginTop: 10, padding: '8px 12px', background: 'rgba(255,255,255,0.08)' }}>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 8, color: 'var(--ink-soft)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email</div>
+                <input
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="you@email.com"
+                  type="email"
+                  style={{
+                    width: '100%', border: 'none', background: 'transparent', outline: 'none',
+                    fontFamily: "'Inter', sans-serif", fontSize: 12, color: 'var(--ink)', marginTop: 3, padding: 0,
+                  }}
+                />
+              </div>
+              {/* Terms checkbox */}
+              <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 10, cursor: 'pointer' }}>
+                <div onClick={() => setAgreed(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: agreed ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{agreed ? '✓' : ''}</div>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to the terms and conditions</span>
+              </label>
+              {/* Marketing checkbox */}
+              <label style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginTop: 8, cursor: 'pointer' }}>
+                <div onClick={() => setMarketing(a => !a)} style={{ width: 14, height: 14, border: '1px solid var(--ink)', borderRadius: 2, flexShrink: 0, marginTop: 1, background: marketing ? 'var(--pink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 8, cursor: 'pointer' }}>{marketing ? '✓' : ''}</div>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: 'var(--ink-2)', lineHeight: 1.4 }}>I agree to receive news and communications from Moco Museum Barcelona</span>
+              </label>
+              <Btn variant="pink" sm onClick={() => { if (email && agreed) setSent(true); }} disabled={!email || !agreed} style={{ marginTop: 12, width: '100%' }}>
+                Save your insight
+              </Btn>
+            </>
+          )}
         </div>
       </div>
 
