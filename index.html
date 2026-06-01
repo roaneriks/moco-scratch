@@ -855,7 +855,7 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
         <img src="/logo-moco-white.png" alt="Moco" style={{ height: 26, display: 'block' }} />
         <Counter>{count} / 5</Counter>
       </div>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 16px 0', paddingBottom: 'calc(18px + env(safe-area-inset-bottom, 0px))', overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 16px 18px', overflow: 'hidden' }}>
 
         {/* Header */}
         <div style={{ marginBottom: 10, flexShrink: 0 }}>
@@ -915,7 +915,7 @@ const PickerScreen = ({ artworks, onContinue, onBack }) => {
         </div>
 
         {/* CTA */}
-        <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+        <div style={{ marginTop: 12, paddingBottom: 'env(safe-area-inset-bottom, 16px)', display: 'flex', gap: 8 }}>
           <Btn variant="default" sm onClick={onBack} style={{ width: 55, flexShrink: 0 }}>‹</Btn>
           {count >= 3
             ? <Btn variant="pink" onClick={() => onContinue([...selected])} style={{ flex: 1 }}>Continue</Btn>
