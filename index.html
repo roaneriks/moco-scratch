@@ -2338,12 +2338,16 @@ const ShareScreen = ({ artworks, onBack }) => (
 
     <RevealArtworks artworks={artworks} noGold />
 
-    {/* Moco logo + @mocomuseum */}
-    <div style={{ position:'absolute', bottom:82, right:18, textAlign:'right', zIndex:4 }}>
+    {/* Moco logo — bottom left */}
+    <div style={{ position:'absolute', bottom:82, left:18, zIndex:4 }}>
       <img src="/logo-moco-white.png" alt="Moco" style={{ height: 30, display: 'block', opacity: 0.9 }} />
+    </div>
+
+    {/* @mocomuseum — bottom right */}
+    <div style={{ position:'absolute', bottom:82, right:18, zIndex:4 }}>
       <div style={{
-        fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 10,
-        color: 'rgba(255,255,255,0.75)', letterSpacing: '0.04em', marginTop: 4,
+        fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 13,
+        color: 'rgba(255,255,255,0.85)', letterSpacing: '0.03em',
       }}>@mocomuseum</div>
     </div>
 
