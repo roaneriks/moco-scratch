@@ -2256,7 +2256,7 @@ const RevealArtworks = ({ artworks, noGold = false }) => (
 );
 
 const RevealScreen = ({ artworks, onShare }) => (
-  <div style={{ flex: 1, position: 'relative', background: '#0a0a0a', overflow: 'hidden' }}>
+  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/Scratcher_background.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
     {/* Pink glow */}
     <div style={{ position:'absolute', top:'5%', left:'-25%', width:'70%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.22) 0%, transparent 65%)', pointerEvents:'none' }} />
     <div style={{ position:'absolute', bottom:'5%', right:'-30%', width:'75%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.18) 0%, transparent 65%)', pointerEvents:'none' }} />
@@ -2301,7 +2301,7 @@ const RevealScreen = ({ artworks, onShare }) => (
 // ─── SCREEN 6 · SHARE ──────────────────────────────────────────────────────
 
 const ShareScreen = ({ artworks, onBack }) => (
-  <div style={{ flex: 1, position: 'relative', background: '#0a0a0a', overflow: 'hidden' }}>
+  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/Scratcher_background.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
     {/* Pink glow */}
     <div style={{ position:'absolute', top:'5%', left:'-25%', width:'70%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.22) 0%, transparent 65%)', pointerEvents:'none', zIndex:0 }} />
     <div style={{ position:'absolute', bottom:'5%', right:'-30%', width:'75%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.18) 0%, transparent 65%)', pointerEvents:'none', zIndex:0 }} />
