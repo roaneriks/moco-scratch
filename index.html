@@ -2256,21 +2256,26 @@ const RevealArtworks = ({ artworks, noGold = false }) => (
 );
 
 const RevealScreen = ({ artworks, onShare }) => (
-  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/Scratcher_background.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
+  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/oldmoco.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
     {/* Pink glow */}
     <div style={{ position:'absolute', top:'5%', left:'-25%', width:'70%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.22) 0%, transparent 65%)', pointerEvents:'none' }} />
     <div style={{ position:'absolute', bottom:'5%', right:'-30%', width:'75%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.18) 0%, transparent 65%)', pointerEvents:'none' }} />
 
-    {/* "Your Moco favourites" heading */}
+    {/* Header bar — clearly separated from the artwork area */}
     <div style={{
-      position: 'absolute', top: 24, left: 0, right: 0,
-      textAlign: 'center', zIndex: 4, pointerEvents: 'none',
+      position: 'absolute', top: 0, left: 0, right: 0, zIndex: 4,
+      background: 'rgba(0,0,0,0.58)',
+      backdropFilter: 'blur(8px)',
+      borderBottom: '1px solid rgba(255,255,255,0.14)',
+      padding: '18px 20px 16px',
+      textAlign: 'center',
+      pointerEvents: 'none',
     }}>
       <div style={{
         fontFamily: "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif",
         fontWeight: 700, fontSize: 22, color: '#ffffff', lineHeight: 1.1,
-        textShadow: '0 2px 10px rgba(0,0,0,0.7)',
-      }}>Your Moco favourites</div>
+        letterSpacing: '0.01em',
+      }}>My Moco favourites</div>
     </div>
 
     <RevealArtworks artworks={artworks} noGold />
@@ -2301,7 +2306,7 @@ const RevealScreen = ({ artworks, onShare }) => (
 // ─── SCREEN 6 · SHARE ──────────────────────────────────────────────────────
 
 const ShareScreen = ({ artworks, onBack }) => (
-  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/Scratcher_background.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
+  <div style={{ flex: 1, position: 'relative', background: 'linear-gradient(rgba(15,15,15,0.55), rgba(15,15,15,0.55)), url("/oldmoco.png") center/cover fixed #0f0f0f', overflow: 'hidden' }}>
     {/* Pink glow */}
     <div style={{ position:'absolute', top:'5%', left:'-25%', width:'70%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.22) 0%, transparent 65%)', pointerEvents:'none', zIndex:0 }} />
     <div style={{ position:'absolute', bottom:'5%', right:'-30%', width:'75%', height:'60%', background:'radial-gradient(circle, rgba(255,61,138,0.18) 0%, transparent 65%)', pointerEvents:'none', zIndex:0 }} />
@@ -2333,9 +2338,13 @@ const ShareScreen = ({ artworks, onBack }) => (
 
     <RevealArtworks artworks={artworks} noGold />
 
-    {/* Moco logo */}
+    {/* Moco logo + @mocomuseum */}
     <div style={{ position:'absolute', bottom:82, right:18, textAlign:'right', zIndex:4 }}>
       <img src="/logo-moco-white.png" alt="Moco" style={{ height: 30, display: 'block', opacity: 0.9 }} />
+      <div style={{
+        fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 10,
+        color: 'rgba(255,255,255,0.75)', letterSpacing: '0.04em', marginTop: 4,
+      }}>@mocomuseum</div>
     </div>
 
   </div>
